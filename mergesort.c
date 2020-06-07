@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define LINE_PRINT_LIM 20
+
 double rand_double();
 int is_sorted(double* a, int len);
 double* mergesort_t(double* input, int len);
@@ -39,8 +41,18 @@ double* mergesort_t(double* input, int len) {
 	int i;
 
 	if (len <= 1) return input;
+
 	a = (double*) malloc(sizeof(double) * (len / 2));
+	if (a == NULL) {
+		printf("subarray malloc failed");
+		exit(1);
+	}
+
 	b = (double*) malloc(sizeof(double) * (len - (len / 2)));
+	if (b == NULL) {
+		printf("subarray malloc failed");
+		exit(1);
+	}
 
 	for (i = 0; i < len / 2; i++) {
 		a[i] = input[i];
@@ -71,7 +83,7 @@ int main(int argc, char **argv) {
 	a = (double*) malloc(sizeof(double) * N);
 
 	if (a == NULL) {
-		printf("malloc of size %d failed\n", N);
+		printf("main malloc failed\n");
 		exit(1);
 	}
 
@@ -81,8 +93,18 @@ int main(int argc, char **argv) {
 
 	a = mergesort_t(a, N);
 
-	for (i = 0; i < N; i++) {
-		printf("%f\n", a[i]);
+	/* make this human readable! */
+
+	if (N < LINE_PRINT_LIM) {
+		for (i = 0; i < N; i++) {
+			printf("%f\n", a[i]);
+		}
+	} else {
+		for (i = 0; i < LINE_PRINT_LIM; i++) {
+			printf("%f\n", a[i]);
+		}
+		printf("Hid remaining %d lines for readability\n", 
+			N - LINE_PRINT_LIM + 1);
 	}
 
 	if (!is_sorted(a, N)) {
