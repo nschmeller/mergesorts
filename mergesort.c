@@ -44,13 +44,13 @@ double* mergesort_t(double* input, int len) {
 
 	a = (double*) malloc(sizeof(double) * (len / 2));
 	if (a == NULL) {
-		printf("subarray malloc failed");
+		printf("subarray malloc failed\n");
 		exit(1);
 	}
 
 	b = (double*) malloc(sizeof(double) * (len - (len / 2)));
 	if (b == NULL) {
-		printf("subarray malloc failed");
+		printf("subarray malloc failed\n");
 		exit(1);
 	}
 
